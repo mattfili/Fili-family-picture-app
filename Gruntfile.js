@@ -51,7 +51,8 @@ module.exports = function(grunt) {
     connect: {
       main: {
         options: {
-          port: randomPort,
+          protocol: 'http',
+          port: 8080,
           base: 'public/',
           open: true,
           livereload: true
@@ -72,6 +73,19 @@ module.exports = function(grunt) {
               '!**/*.js',
             ],
             dest: 'public/',
+            filter: 'isFile'
+          }
+        ]
+      },
+      fcomp: {
+        files: [
+          {
+            expand: true,
+            cwd: 'bower_components/foundation-apps/js/angular/components/',
+            src: [
+              '**/*.html'
+            ],
+            dest: 'public/components/',
             filter: 'isFile'
           }
         ]
@@ -191,6 +205,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build-dev', [
     'clean',
     'copy',
+    'copy:fcomp',
     'sass:dev',
     'babel:dev',
     'bower_concat',
